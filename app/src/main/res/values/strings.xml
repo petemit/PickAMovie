@@ -3,5 +3,11 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_movie_details">MovieDetails</string>
     <string name="mostPopularStringLabel">Most Popular</string>
+    <string name="refresh">Refresh</string>
+    <string name="sort_by_most_popular">Sort by Most Popular</string>
+    <string name="sort_by_top_rated">Sort by Top Rated</string>
+    <string name="noInternet">No Internet Connection</string>
+    <string name="topRatedStringLabel">Top Rated</string>
+    <string name="movie">Movie</string>
 
 </resources>

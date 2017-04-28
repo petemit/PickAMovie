@@ -3,25 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.android.pickamovie.MainMovieActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_refresh"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/refresh"
         app:showAsAction="never" />
     <item android:id="@+id/action_sort_popular"
         android:orderInCategory="99"
-        android:title="Sort by Most Popular"
+        android:title="@string/sort_by_most_popular"
         app:showAsAction="never">
 
     </item>
     <item android:id="@+id/action_sort_top_rated"
         android:orderInCategory="98"
-        android:title="Sort by Top Rated"
+        android:title="@string/sort_by_top_rated"
         app:showAsAction="never">
 
     </item>
-    <item android:id="@+id/action_sort_az"
-        android:orderInCategory="97"
-        android:title="Sort A-Z"
-        app:showAsAction="never">
-    </item>
+
 </menu>

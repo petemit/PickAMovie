@@ -36,15 +36,20 @@ public class MainMovieActivity extends AppCompatActivity {
     private ProgressBar loadingPB;
     //How many columns are in the grid layout manager
     private final int GRIDLAYOUTCOLUMNCOUNT=2;
-    private static final String popularString="popular";
-    private static final String topRatedString="top_rated";
+    private String popularString="popular";
+    private String topRatedString="top_rated";
     public TextView filterText;
+    private String selectedFilter;
     private String popularFilterLabel;
+    private String topRatedFilterLabel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //default to the popular filter
+        selectedFilter=popularString;
+
         Context context =this.getBaseContext();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -53,6 +58,7 @@ public class MainMovieActivity extends AppCompatActivity {
         loadingPB=(ProgressBar)findViewById(R.id.pb_loading_progressbar);
         filterText=(TextView)findViewById(R.id.tv_current_filter);
         popularFilterLabel=getString(R.string.mostPopularStringLabel);
+        topRatedFilterLabel=getString(R.string.topRatedStringLabel);
 
 
         //Need to get the length of the array here so the grid can be laid out
@@ -65,7 +71,7 @@ public class MainMovieActivity extends AppCompatActivity {
 
         rv.setLayoutManager(gridLayoutMgr);
 
-        new getMovieData().execute(popularString);
+        new getMovieData().execute(selectedFilter);
 
         filterText.setText(popularFilterLabel);
 
@@ -137,7 +143,7 @@ public class MainMovieActivity extends AppCompatActivity {
                 }
 
                 private void noInternetConnectionNotify() {
-                    loadingText.setText("No Internet Connection");
+                    loadingText.setText(R.string.noInternet);
                     loadingText.setVisibility(View.VISIBLE);
                     loadingPB.setVisibility(View.INVISIBLE);
                 }
@@ -154,13 +160,7 @@ public class MainMovieActivity extends AppCompatActivity {
             }
 
 
-        //TODO change the default color scheme
 
-        //TODO Connect an item in the recycler view to launch an activity
-
-        //todo make a recyclerview
-
-        //todo make a recyclerview adapterclass
 
 
 
@@ -191,9 +191,26 @@ public class MainMovieActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_refresh) {
+            new getMovieData().execute(selectedFilter);
+            loadingText.setVisibility(View.VISIBLE);
+            loadingPB.setVisibility(View.VISIBLE);
+
+            rv.setVisibility(View.INVISIBLE);
         }
+
+        if (id == R.id.action_sort_popular) {
+            selectedFilter=popularString;
+            filterText.setText(popularFilterLabel);
+            new getMovieData().execute(selectedFilter);
+        }
+
+        if (id == R.id.action_sort_top_rated) {
+            selectedFilter=topRatedString;
+            filterText.setText(topRatedFilterLabel);
+            new getMovieData().execute(selectedFilter);
+        }
+
 
         return super.onOptionsItemSelected(item);
     }

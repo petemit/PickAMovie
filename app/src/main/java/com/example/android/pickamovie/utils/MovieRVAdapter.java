@@ -65,7 +65,7 @@ public class MovieRVAdapter extends RecyclerView.Adapter<MovieRVAdapter.MovieRVA
 
             tv = (TextView) itemView.findViewById(R.id.tv_movie_test_text);
             iv = (ImageView) itemView.findViewById(R.id.iv_movie_poster);
-            //todo add image
+
 
         }
 
