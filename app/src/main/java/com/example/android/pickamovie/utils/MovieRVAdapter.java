@@ -74,6 +74,7 @@ public class MovieRVAdapter extends RecyclerView.Adapter<MovieRVAdapter.MovieRVA
             tv.setText(md.getTitle());
             URL url = NetworkUtils.imageUrlBuilder(md.getPoster_path());
             Picasso.with(itemView.getContext()).load(url.toString()).into(iv);
+
             //This is where all the magic will happen.
 
 

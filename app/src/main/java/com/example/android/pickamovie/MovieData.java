@@ -8,20 +8,21 @@ import java.io.Serializable;
 
 public class MovieData implements Serializable{
     private String overview;
+    private long dbID;
     private String poster_path;
     private String release_date;
-    private String id;
+    private String API_id;
     private String original_title;
     private String title;
     private float popularity;
     private int vote_count;
     private float vote_average;
 
-    public MovieData(String overview, String poster_path, String release_date, String id, String original_title, String title, float popularity, int vote_count, float vote_average) {
+    public MovieData(String overview, String poster_path, String release_date, String API_id, String original_title, String title, float popularity, int vote_count, float vote_average) {
         this.overview = overview;
         this.poster_path = poster_path;
         this.release_date = release_date;
-        this.id = id;
+        this.API_id = API_id;
         this.original_title = original_title;
         this.title = title;
         this.popularity = popularity;
@@ -30,7 +31,7 @@ public class MovieData implements Serializable{
     }
 
     public MovieData(String id){
-        this.id=id;
+        this.API_id=id;
     }
     public String getOverview() {
         return overview;
@@ -57,11 +58,11 @@ public class MovieData implements Serializable{
     }
 
     public String getId() {
-        return id;
+        return API_id;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.API_id = id;
     }
 
     public String getOriginal_title() {
@@ -102,5 +103,13 @@ public class MovieData implements Serializable{
 
     public void setVote_average(float vote_average) {
         this.vote_average = vote_average;
+    }
+
+    public long getDbID() {
+        return dbID;
+    }
+
+    public void setDbID(long dbID) {
+        this.dbID = dbID;
     }
 }

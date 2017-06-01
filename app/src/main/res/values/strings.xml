@@ -8,6 +8,9 @@
     <string name="sort_by_top_rated">Sort by Top Rated</string>
     <string name="noInternet">No Internet Connection</string>
     <string name="topRatedStringLabel">Top Rated</string>
+    <string name="favorite_toggle_on">Add To Favorites</string>
+    <string name="favorite_toggle_off">Remove From Favorites</string>
     <string name="movie">Movie</string>
+    <string name="title_activity_main2">Main2Activity</string>
 
 </resources>

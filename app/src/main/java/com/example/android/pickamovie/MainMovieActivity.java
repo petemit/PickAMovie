@@ -18,8 +18,12 @@ import android.view.MenuItem;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.android.pickamovie.data.MovieDBContentProvider;
+import com.example.android.pickamovie.data.MovieDBContract;
+import com.example.android.pickamovie.data.MovieDBHelper;
 import com.example.android.pickamovie.utils.MovieRVAdapter;
 import com.example.android.pickamovie.utils.NetworkUtils;
+import com.facebook.stetho.Stetho;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,7 +53,8 @@ public class MainMovieActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //default to the popular filter
         selectedFilter=popularString;
-
+        //todo remove stethos here
+        Stetho.initializeWithDefaults(this);
         Context context =this.getBaseContext();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -59,6 +64,8 @@ public class MainMovieActivity extends AppCompatActivity {
         filterText=(TextView)findViewById(R.id.tv_current_filter);
         popularFilterLabel=getString(R.string.mostPopularStringLabel);
         topRatedFilterLabel=getString(R.string.topRatedStringLabel);
+
+
 
 
         //Need to get the length of the array here so the grid can be laid out
@@ -116,14 +123,14 @@ public class MainMovieActivity extends AppCompatActivity {
                             String overview=ja.getJSONObject(i).get("overview").toString();
                             String poster_path=ja.getJSONObject(i).get("poster_path").toString();
                             String release_date=ja.getJSONObject(i).get("release_date").toString();
-                            String id=ja.getJSONObject(i).get("id").toString();
+                            String API_id=ja.getJSONObject(i).get("id").toString();
                             String original_title=ja.getJSONObject(i).get("original_title").toString();
                             String title=ja.getJSONObject(i).get("title").toString();
                             String popularity=ja.getJSONObject(i).get("popularity").toString();
                             String vote_count=ja.getJSONObject(i).get("vote_count").toString();
                             String vote_average=ja.getJSONObject(i).get("vote_average").toString();
                             MovieData md= new MovieData(overview,poster_path,release_date
-                            ,id,original_title,title,Float.parseFloat(popularity),Integer.parseInt(vote_count),Float.parseFloat(vote_average));
+                            ,API_id,original_title,title,Float.parseFloat(popularity),Integer.parseInt(vote_count),Float.parseFloat(vote_average));
                             movieDataArrayList.add(md);
                         }
                     }

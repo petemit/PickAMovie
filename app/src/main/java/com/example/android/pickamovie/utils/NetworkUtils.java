@@ -24,7 +24,7 @@ import java.util.Scanner;
 public class NetworkUtils {
 
     //todo Remove API key before putting in GIT!
-    private static final String APIKEY="PUT YOUR API KEY HERE";
+    private static final String APIKEY="";
     private static final String baseImageURI="image.tmdb.org";
     private static final String baseURI="api.themoviedb.org";
     private static final String imagepath1="t";
