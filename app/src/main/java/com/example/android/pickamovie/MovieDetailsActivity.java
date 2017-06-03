@@ -3,26 +3,40 @@ package com.example.android.pickamovie;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.pickamovie.data.MovieDBContract;
 import com.example.android.pickamovie.data.MovieDBHelper;
+import com.example.android.pickamovie.utils.MovieRVAdapter;
 import com.example.android.pickamovie.utils.NetworkUtils;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.zip.Inflater;
+
+import static android.net.Uri.parse;
 
 public class MovieDetailsActivity extends AppCompatActivity {
 private MovieData md;
@@ -31,6 +45,8 @@ private MovieData md;
     private TextView synopsis;
     private TextView voteAverage;
     private TextView releaseDate;
+    private ViewGroup reviewroot;
+    private ViewGroup videoroot;
     private final boolean MOVIEFAVORITED=true;
     private final boolean MOVIEUNFAVORITED=false;
     @Override
@@ -53,6 +69,12 @@ private MovieData md;
         synopsis.setText(md.getOverview());
         voteAverage.setText(String.valueOf(md.getVote_average()));
         releaseDate.setText(md.getRelease_date());
+
+        reviewroot=(ViewGroup)findViewById(R.id.review_root);
+        videoroot=(ViewGroup)findViewById(R.id.video_root);
+
+        new getMovieReviews().execute(md.getId());
+        new getMovieVideos().execute(md.getId());
 
 
 
@@ -87,6 +109,191 @@ private MovieData md;
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+
+
+    public class getMovieReviews extends AsyncTask<String, Void, JSONObject> {
+
+        @Override
+        protected JSONObject doInBackground(String... params) {
+
+            URL reviewurl = NetworkUtils.reviewsUrlBuilder(params[0]);
+
+            String reviewResponse = "";
+            try {
+
+
+                reviewResponse = NetworkUtils.getResponseFromURL(reviewurl);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            JSONObject reviewjo = null;
+            try {
+
+                reviewjo = new JSONObject(reviewResponse);
+
+            } catch (JSONException j) {
+                j.printStackTrace();
+            }
+            return reviewjo;
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject jo) {
+            LayoutInflater inflater =  getLayoutInflater();
+            super.onPostExecute(jo);
+            ArrayList<String> reviewList = new ArrayList<String>();
+            JSONArray ja = null;
+            boolean canContinue = true;
+            try {
+                ja = jo.getJSONArray("results");
+
+                for (int i = 0; i < ja.length(); i++) {
+                    View view =inflater.inflate(R.layout.review_item, reviewroot, false);
+                    TextView tv_author = (TextView) view.findViewById(R.id.tv_author);
+                    TextView tv_content = (TextView) view.findViewById(R.id.tv_content);
+                    TextView tv_url = (TextView) view.findViewById(R.id.tv_content_more);
+                    String author = ja.getJSONObject(i).get("author").toString();
+                    String content = ja.getJSONObject(i).get("content").toString();
+                    if (content.length() >101) {
+                        content = content.substring(0, 100) + ". . .";
+                    }
+                    else{
+                        tv_url.setVisibility(View.GONE);
+                    }
+                    final String link = ja.getJSONObject(i).get("url").toString();
+                    tv_author.setText(author);
+                    tv_content.setText(content);
+                    tv_url.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+                            if (myIntent.resolveActivity(getPackageManager()) != null) {
+                                startActivity(myIntent);
+                            }
+                        }
+                    });
+                    reviewroot.addView(view);
+                    reviewroot.refreshDrawableState();
+//
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (NullPointerException e) {
+                canContinue = false;
+
+
+            }
+            if (canContinue) {
+
+                Log.i("MainMovieActivity", "got data");
+            }
+
+        }
+//
+//        private void noInternetConnectionNotify() {
+//            loadingText.setText(R.string.noInternet);
+//            loadingText.setVisibility(View.VISIBLE);
+//            loadingPB.setVisibility(View.INVISIBLE);
+//        }
+
+    }
+
+
+    public class getMovieVideos extends AsyncTask<String, Void, JSONObject> {
+
+        @Override
+        protected JSONObject doInBackground(String... params) {
+
+            URL videourl = NetworkUtils.videoUrlBuilder(params[0]);
+
+            String videoResponse = "";
+            try {
+
+
+                videoResponse = NetworkUtils.getResponseFromURL(videourl);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            JSONObject videojo = null;
+            try {
+
+                videojo = new JSONObject(videoResponse);
+
+            } catch (JSONException j) {
+                j.printStackTrace();
+            }
+            return videojo;
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject jo) {
+            LayoutInflater inflater =  getLayoutInflater();
+            super.onPostExecute(jo);
+
+            JSONArray ja = null;
+            boolean canContinue = true;
+            try {
+                ja = jo.getJSONArray("results");
+
+                for (int i = 0; i < ja.length(); i++) {
+                    View view =inflater.inflate(R.layout.video_item, videoroot, false);
+                    ImageView movieThumbnail= (ImageView) view.findViewById(R.id.tv_movie_thumbnail);
+                    TextView tv_Title = (TextView) view.findViewById(R.id.tv_trailer_title);
+
+                    String trailername = ja.getJSONObject(i).get("name").toString();
+                    final String key = ja.getJSONObject(i).get("key").toString();
+
+                    Uri thumbnailUri= NetworkUtils.youtubeThumbnailGrab(key);
+                    Picasso.with(view.getContext()).load(thumbnailUri).into(movieThumbnail);
+                    tv_Title.setText(trailername);
+
+                    movieThumbnail.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:"+key));
+                            if (myIntent.resolveActivity(getPackageManager()) != null) {
+                                startActivity(myIntent);
+                            }
+                            else{
+                                Intent vidWebIntent = new Intent(Intent.ACTION_VIEW, NetworkUtils.youtubeLinkBuilder(key));
+                                if (vidWebIntent.resolveActivity(getPackageManager()) != null) {
+                                    startActivity(vidWebIntent);
+                                }
+
+                            };
+
+                        }
+                    });
+                    videoroot.addView(view);
+
+
+//
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (NullPointerException e) {
+                canContinue = false;
+
+
+            }
+            if (canContinue) {
+
+                Log.i("MainMovieActivity", "got data");
+            }
+
+        }
+//
+//        private void noInternetConnectionNotify() {
+//            loadingText.setText(R.string.noInternet);
+//            loadingText.setVisibility(View.VISIBLE);
+//            loadingPB.setVisibility(View.INVISIBLE);
+//        }
+
+    }
+
+
 
     private void switchFabIcon(FloatingActionButton fab, Context context){
         //will return true if it has been favorited.  This will allow us to toggle.

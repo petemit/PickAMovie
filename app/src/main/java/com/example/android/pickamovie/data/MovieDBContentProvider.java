@@ -52,23 +52,26 @@ public class MovieDBContentProvider extends ContentProvider {
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
         Cursor cursor=null;
         SQLiteDatabase db= dbHelper.getReadableDatabase();
-        String mSelection= MovieDBContract.FavoriteMovies._ID + "=? ";
-        String[] mSelectionArgs= {String.valueOf(ContentUris.parseId(uri))};
 
-        String mAPISelection= MovieDBContract.FavoriteMovies.COLUMN_API_ID + "=? ";
+
+
 
 
 
         switch (uriMatcher.match(uri)){
             case FAVORITES:
-                cursor= db.query(MovieDBContract.FavoriteMovies.TABLE_NAME,FAVORITE_LIST,null,null,null,null,null);
+                cursor= db.query(MovieDBContract.FavoriteMovies.TABLE_NAME,null,null,null,null,null,null);
                 break;
             case FAVORITE_BY_ID:
+                String mSelection= MovieDBContract.FavoriteMovies._ID + "=? ";
+                String[] mSelectionArgs= {String.valueOf(ContentUris.parseId(uri))};
                 cursor= db.query(MovieDBContract.FavoriteMovies.TABLE_NAME,null,mSelection,mSelectionArgs,null,null,null);
                 break;
 
             case FAVORITE_BY_APIID:
-                cursor= db.query(MovieDBContract.FavoriteMovies.TABLE_NAME,null,mAPISelection,mSelectionArgs,null,null,null);
+                String mAPISelection= MovieDBContract.FavoriteMovies.COLUMN_API_ID + "=? ";
+                String[] mAPISelectionArgs= {String.valueOf(ContentUris.parseId(uri))};
+                cursor= db.query(MovieDBContract.FavoriteMovies.TABLE_NAME,null,mAPISelection,mAPISelectionArgs,null,null,null);
                 break;
             default:
                 throw new IllegalArgumentException("Query not supported");

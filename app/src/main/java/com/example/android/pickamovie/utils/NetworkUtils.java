@@ -31,8 +31,17 @@ public class NetworkUtils {
     private static final String imagepath2="p";
     private static final String apiversion3 ="3";
     private static final String moviepath="movie";
+    private static final String videoPath="videos";
+    private static final String reviewPath="reviews";
     private static final String apiKeyParameter="api_key";
     private static final String imageSize="w185";
+    private static final String baseYoutubeImageUri="img.youtube.com";
+    private static final String youtubePath1="vi";
+    private static final String finalYoutubePath="0.jpg";
+
+    private static final String baseYoutubeVideoUri="youtube.com";
+    private static final String youtubeVidPath1="v";
+    private static final String youtubeWatchParameter="watch";
 
     public static URL movieUrlBuilder(String s){
         Uri.Builder builder = new Uri.Builder();
@@ -41,6 +50,65 @@ public class NetworkUtils {
                 .appendPath(apiversion3)
                 .appendPath(moviepath)
                 .appendPath(s)
+                .appendQueryParameter(apiKeyParameter,APIKEY).build();
+
+        URL url = null;
+        try {
+            url = new URL(uri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        return url;
+    }
+
+    public static URL videoUrlBuilder(String s){
+        Uri.Builder builder = new Uri.Builder();
+        Uri uri=builder.scheme("http")
+                .authority(baseURI)
+                .appendPath(apiversion3)
+                .appendPath(moviepath)
+                .appendPath(s)
+                .appendPath(videoPath)
+                .appendQueryParameter(apiKeyParameter,APIKEY).build();
+
+        URL url = null;
+        try {
+            url = new URL(uri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        return url;
+    }
+
+    public static Uri youtubeLinkBuilder(String s){
+        Uri.Builder builder = new Uri.Builder();
+        Uri uri=builder.scheme("http")
+                .authority(baseYoutubeVideoUri)
+                .appendPath(youtubeWatchParameter)
+                .appendQueryParameter(youtubeVidPath1,s).build();
+
+//        URL url = null;
+//        try {
+//            url = new URL(uri.toString());
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return url;
+        return uri;
+
+    }
+
+    public static URL reviewsUrlBuilder(String s){
+        Uri.Builder builder = new Uri.Builder();
+        Uri uri=builder.scheme("http")
+                .authority(baseURI)
+                .appendPath(apiversion3)
+                .appendPath(moviepath)
+                .appendPath(s)
+                .appendPath(reviewPath)
                 .appendQueryParameter(apiKeyParameter,APIKEY).build();
 
         URL url = null;
@@ -72,6 +140,28 @@ public class NetworkUtils {
         }
 
         return url;
+
+    }
+
+
+    public static Uri youtubeThumbnailGrab(String id){
+        //todo maybe allow tablets by making imagesize dynamic
+
+        Uri.Builder builder = new Uri.Builder();
+        Uri uri=builder.scheme("http")
+                .authority(baseYoutubeImageUri)
+                .appendPath(youtubePath1)
+                .appendPath(id)
+                .appendPath(finalYoutubePath)
+                .build();
+        URL url = null;
+//        try {
+//            url = new URL(uri.toString());
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        }
+
+        return uri;
 
     }
 

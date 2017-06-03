@@ -44,7 +44,7 @@ public class MovieDBHelper extends SQLiteOpenHelper{
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        //todo remove so data persists
+        //todo apply persistence for favorites
         db.execSQL("DROP TABLE IF EXISTS " + MovieDBContract.FavoriteMovies.TABLE_NAME);
         db.execSQL("DELETE FROM SQLITE_SEQUENCE WHERE NAME = '" +
                 MovieDBContract.FavoriteMovies.TABLE_NAME + "'");

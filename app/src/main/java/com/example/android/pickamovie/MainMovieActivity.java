@@ -1,6 +1,7 @@
 package com.example.android.pickamovie;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Movie;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,7 +24,7 @@ import com.example.android.pickamovie.data.MovieDBContract;
 import com.example.android.pickamovie.data.MovieDBHelper;
 import com.example.android.pickamovie.utils.MovieRVAdapter;
 import com.example.android.pickamovie.utils.NetworkUtils;
-import com.facebook.stetho.Stetho;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,6 +47,9 @@ public class MainMovieActivity extends AppCompatActivity {
     private String selectedFilter;
     private String popularFilterLabel;
     private String topRatedFilterLabel;
+    private TextView favoritesTvLabel;
+    private boolean favoritesToggle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +57,7 @@ public class MainMovieActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //default to the popular filter
         selectedFilter=popularString;
-        //todo remove stethos here
-        Stetho.initializeWithDefaults(this);
+
         Context context =this.getBaseContext();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -68,6 +71,7 @@ public class MainMovieActivity extends AppCompatActivity {
 
 
 
+
         //Need to get the length of the array here so the grid can be laid out
 
 
@@ -77,8 +81,12 @@ public class MainMovieActivity extends AppCompatActivity {
         rv.setHasFixedSize(true);
 
         rv.setLayoutManager(gridLayoutMgr);
-
-        new getMovieData().execute(selectedFilter);
+        if (favoritesToggle==false) {
+            new getMovieData().execute(selectedFilter);
+        }
+        else{
+            new getMovieData().showFavorites();
+        }
 
         filterText.setText(popularFilterLabel);
 
@@ -155,12 +163,69 @@ public class MainMovieActivity extends AppCompatActivity {
                     loadingPB.setVisibility(View.INVISIBLE);
                 }
 
+                public void noFavoritesNotify() {
+                    loadingText.setText("No Favorites");
+                    loadingText.setVisibility(View.VISIBLE);
+                    loadingPB.setVisibility(View.INVISIBLE);
+                    filterText.setVisibility(View.INVISIBLE);
+                    rv.setVisibility(View.INVISIBLE);
+
+                }
+
+                public void showFavorites() {
+                    //get all the moviedata into a list of moviedata objects and display them
+                    ArrayList<MovieData> favoriteMovieList = new ArrayList<MovieData>();
+
+                    Cursor curs = getContentResolver().query(MovieDBContract.FavoriteMovies.CONTENT_URI
+                            , null, null, null, null);
+                    if (curs != null) {
+                        while (curs.moveToNext()) {
+                            MovieData md = new MovieData(
+                                    curs.getString(curs.getColumnIndex(MovieDBContract.FavoriteMovies.COLUMN_OVERVIEW)),
+                                    curs.getString(curs.getColumnIndex(MovieDBContract.FavoriteMovies.COLUMN_POSTER_PATH)),
+                                    curs.getString(curs.getColumnIndex(MovieDBContract.FavoriteMovies.COLUMN_RELEASE_DATE)),
+                                    curs.getString(curs.getColumnIndex(MovieDBContract.FavoriteMovies.COLUMN_API_ID)),
+                                    curs.getString(curs.getColumnIndex(MovieDBContract.FavoriteMovies.COLUMN_ORIGINAL_TITLE)),
+                                    curs.getString(curs.getColumnIndex(MovieDBContract.FavoriteMovies.COLUMN_TITLE)),
+                                    curs.getFloat(curs.getColumnIndex(MovieDBContract.FavoriteMovies.COLUMN_POPULARITY)),
+                                    curs.getInt(curs.getColumnIndex(MovieDBContract.FavoriteMovies.COLUMN_VOTE_COUNT)),
+                                    curs.getFloat(curs.getColumnIndex(MovieDBContract.FavoriteMovies.COLUMN_VOTE_AVERAGE))
+                            );
+                            favoriteMovieList.add(md);
+
+                        }
+
+
+                    }
+
+
+                    else{
+                        //need to show failure somehow
+                        if (favoriteMovieList.isEmpty()) {
+                            noFavoritesNotify();
+                        }
+
+                    }
+
+                    if (favoriteMovieList.isEmpty()) {
+                        noFavoritesNotify();
+                    }
+                    else {
+                        displayMovieData(favoriteMovieList);
+                        filterText.setText("Favorites");
+                        filterText.setVisibility(View.VISIBLE);
+                    }
+                }
+
+
+
                 private void displayMovieData(ArrayList<MovieData> movieDataArrayList) {
                     MovieRVAdapter adapter = new MovieRVAdapter(movieDataArrayList);
                     rv.setAdapter(adapter);
                     rv.setVisibility(View.VISIBLE);
-                    loadingPB.setVisibility(View.INVISIBLE);
-                    loadingText.setVisibility(View.INVISIBLE);
+                    loadingPB.setVisibility(View.GONE);
+
+                    loadingText.setVisibility(View.GONE);
                     filterText.setVisibility(View.VISIBLE);
 
                 }
@@ -209,14 +274,24 @@ public class MainMovieActivity extends AppCompatActivity {
         if (id == R.id.action_sort_popular) {
             selectedFilter=popularString;
             filterText.setText(popularFilterLabel);
+            filterText.setVisibility(View.VISIBLE);
             new getMovieData().execute(selectedFilter);
         }
 
         if (id == R.id.action_sort_top_rated) {
             selectedFilter=topRatedString;
             filterText.setText(topRatedFilterLabel);
+            filterText.setVisibility(View.VISIBLE);
             new getMovieData().execute(selectedFilter);
         }
+
+        if (id == R.id.action_show_favorites) {
+
+            new getMovieData().showFavorites();
+
+
+        }
+
 
 
         return super.onOptionsItemSelected(item);

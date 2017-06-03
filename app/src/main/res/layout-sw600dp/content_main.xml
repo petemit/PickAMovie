@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/tv_current_filter"
         android:textColor="@color/whiteText"
-        android:textSize="22sp"
+        android:textSize="32sp"
         android:paddingLeft="15dp"
         android:layout_gravity="center"
         android:gravity="center"
