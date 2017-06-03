@@ -12,5 +12,7 @@
     <string name="favorite_toggle_off">Remove From Favorites</string>
     <string name="movie">Movie</string>
     <string name="title_activity_main2">Main2Activity</string>
+    <string name="nofavorites">No Favorites</string>
+    <string name="favorites">Favorites</string>
 
 </resources>

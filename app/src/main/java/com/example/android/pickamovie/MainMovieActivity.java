@@ -36,13 +36,15 @@ import java.util.ArrayList;
 
 public class MainMovieActivity extends AppCompatActivity {
 
+    public static final String TOP_RATED = "top_rated";
+    public static final String POPULAR = "popular";
     private RecyclerView rv;
     private TextView loadingText;
     private ProgressBar loadingPB;
     //How many columns are in the grid layout manager
     private final int GRIDLAYOUTCOLUMNCOUNT=2;
-    private String popularString="popular";
-    private String topRatedString="top_rated";
+    private String popularString= POPULAR;
+    private String topRatedString= TOP_RATED;
     public TextView filterText;
     private String selectedFilter;
     private String popularFilterLabel;
@@ -164,7 +166,7 @@ public class MainMovieActivity extends AppCompatActivity {
                 }
 
                 public void noFavoritesNotify() {
-                    loadingText.setText("No Favorites");
+                    loadingText.setText(getString(R.string.nofavorites));
                     loadingText.setVisibility(View.VISIBLE);
                     loadingPB.setVisibility(View.INVISIBLE);
                     filterText.setVisibility(View.INVISIBLE);
@@ -212,7 +214,7 @@ public class MainMovieActivity extends AppCompatActivity {
                     }
                     else {
                         displayMovieData(favoriteMovieList);
-                        filterText.setText("Favorites");
+                        filterText.setText(getString(R.string.favorites));
                         filterText.setVisibility(View.VISIBLE);
                     }
                 }
