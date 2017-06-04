@@ -1,3 +1,15 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="bigfabwidth">72dp</dimen>
+    <dimen name="mainTextSize">22sp</dimen>
+    <dimen name="detailText">16sp</dimen>
+    <dimen name="image_detail_height">350dp</dimen>
+    <dimen name="text_padding">20dp</dimen>
+    <dimen name="biggertext">26sp</dimen>
+    <dimen name="view_distance_small">5dp</dimen>
+    <dimen name="empty_view_padding">150dp</dimen>
+    <dimen name="bigger_screen_padding">100dp</dimen>
+    <dimen name="image_pad">15dp</dimen>
+    <dimen name="slight_indentation">30dp</dimen>
+    <dimen name="topPadding10">10dp</dimen>
 </resources>

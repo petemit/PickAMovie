@@ -13,21 +13,21 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="5dp"
+        android:paddingLeft="@dimen/view_distance_small"
         android:layout_gravity="center"
-        android:paddingTop="5dp"
-        android:paddingRight="5dp"
+        android:paddingTop="@dimen/view_distance_small"
+        android:paddingRight="@dimen/view_distance_small"
         android:id="@+id/tv_movie_thumbnail"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="5dp"
+        android:paddingLeft="@dimen/view_distance_small"
         android:textColor="@color/whiteText"
-        android:paddingTop="4dp"
+        android:paddingTop="@dimen/view_distance_small"
         android:layout_gravity="center"
         android:lines="2"
-        android:paddingBottom="5dp"
-        android:paddingRight="5dp"
+        android:paddingBottom="@dimen/view_distance_small"
+        android:paddingRight="@dimen/view_distance_small"
         tool:text="Thrilling movie"
         android:id="@+id/tv_trailer_title"/>
 

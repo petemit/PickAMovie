@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.graphics.Movie;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -38,6 +39,7 @@ public class MainMovieActivity extends AppCompatActivity {
 
     public static final String TOP_RATED = "top_rated";
     public static final String POPULAR = "popular";
+    public static final String FAVORITES = "favorites";
     private RecyclerView rv;
     private TextView loadingText;
     private ProgressBar loadingPB;
@@ -46,7 +48,8 @@ public class MainMovieActivity extends AppCompatActivity {
     private String popularString= POPULAR;
     private String topRatedString= TOP_RATED;
     public TextView filterText;
-    private String selectedFilter;
+    private String selectedFilter=popularString;
+    private static final String SELECTEDFILTER_KEY="selectedfilter";
     private String popularFilterLabel;
     private String topRatedFilterLabel;
     private TextView favoritesTvLabel;
@@ -57,8 +60,41 @@ public class MainMovieActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //default to the popular filter
-        selectedFilter=popularString;
+       //filterText=(TextView)findViewById(R.id.tv_current_filter);
+        popularFilterLabel=getString(R.string.mostPopularStringLabel);
+        topRatedFilterLabel=getString(R.string.topRatedStringLabel);
+
+
+
+        if (savedInstanceState!=null){
+            selectedFilter=savedInstanceState.getString(SELECTEDFILTER_KEY);
+            switch (selectedFilter){
+                case POPULAR:
+                    //filterText.setText(popularFilterLabel);
+                    setTitle(popularFilterLabel);
+                    break;
+                case TOP_RATED:
+                  //  filterText.setText(topRatedFilterLabel);
+                    setTitle(topRatedFilterLabel);
+                    break;
+                case FAVORITES:
+                    //filterText.setText(getString(R.string.favorites));
+                    setTitle(getString(R.string.favorites));
+                    favoritesToggle=true;
+                default:
+                    setTitle("");
+            }
+
+        }
+        else{
+            selectedFilter=popularString;
+          //  filterText.setText(popularFilterLabel);
+            setTitle(popularFilterLabel);
+        }
+
+
+
+
 
         Context context =this.getBaseContext();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -66,9 +102,7 @@ public class MainMovieActivity extends AppCompatActivity {
         rv=(RecyclerView)findViewById(R.id.rv_mainMovie);
         loadingText=(TextView)findViewById(R.id.tv_text_loading);
         loadingPB=(ProgressBar)findViewById(R.id.pb_loading_progressbar);
-        filterText=(TextView)findViewById(R.id.tv_current_filter);
-        popularFilterLabel=getString(R.string.mostPopularStringLabel);
-        topRatedFilterLabel=getString(R.string.topRatedStringLabel);
+
 
 
 
@@ -87,15 +121,29 @@ public class MainMovieActivity extends AppCompatActivity {
             new getMovieData().execute(selectedFilter);
         }
         else{
+            selectedFilter=FAVORITES;
+         //   filterText.setText(getString(R.string.favorites));
+            setTitle(getString(R.string.favorites));
             new getMovieData().showFavorites();
+
+
         }
 
-        filterText.setText(popularFilterLabel);
+
 
 
 
     }
-            //this is the async data portion that will call the class NetworkUtils for the net-work.  ba doom psh
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putString(SELECTEDFILTER_KEY,selectedFilter);
+        super.onSaveInstanceState(outState);
+
+    }
+
+
+    //this is the async data portion that will call the class NetworkUtils for the net-work.  ba doom psh
         public class getMovieData extends AsyncTask<String, Void, JSONObject>{
 
                 @Override
@@ -169,7 +217,7 @@ public class MainMovieActivity extends AppCompatActivity {
                     loadingText.setText(getString(R.string.nofavorites));
                     loadingText.setVisibility(View.VISIBLE);
                     loadingPB.setVisibility(View.INVISIBLE);
-                    filterText.setVisibility(View.INVISIBLE);
+                   // filterText.setVisibility(View.INVISIBLE);
                     rv.setVisibility(View.INVISIBLE);
 
                 }
@@ -214,8 +262,9 @@ public class MainMovieActivity extends AppCompatActivity {
                     }
                     else {
                         displayMovieData(favoriteMovieList);
-                        filterText.setText(getString(R.string.favorites));
-                        filterText.setVisibility(View.VISIBLE);
+
+                   //     filterText.setVisibility(View.VISIBLE);
+
                     }
                 }
 
@@ -228,7 +277,7 @@ public class MainMovieActivity extends AppCompatActivity {
                     loadingPB.setVisibility(View.GONE);
 
                     loadingText.setVisibility(View.GONE);
-                    filterText.setVisibility(View.VISIBLE);
+                 //   filterText.setVisibility(View.VISIBLE);
 
                 }
             }
@@ -249,6 +298,8 @@ public class MainMovieActivity extends AppCompatActivity {
 //            }
 //        });
 //    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -275,21 +326,26 @@ public class MainMovieActivity extends AppCompatActivity {
 
         if (id == R.id.action_sort_popular) {
             selectedFilter=popularString;
-            filterText.setText(popularFilterLabel);
-            filterText.setVisibility(View.VISIBLE);
+          //  filterText.setText(popularFilterLabel);
+            setTitle(popularFilterLabel);
+          //  filterText.setVisibility(View.VISIBLE);
             new getMovieData().execute(selectedFilter);
         }
 
         if (id == R.id.action_sort_top_rated) {
             selectedFilter=topRatedString;
-            filterText.setText(topRatedFilterLabel);
-            filterText.setVisibility(View.VISIBLE);
+          //  filterText.setText(topRatedFilterLabel);
+            setTitle(topRatedFilterLabel);
+          //  filterText.setVisibility(View.VISIBLE);
             new getMovieData().execute(selectedFilter);
         }
 
         if (id == R.id.action_show_favorites) {
-
+            selectedFilter=FAVORITES;
+          //  filterText.setText(getString(R.string.favorites));
+            setTitle(getString(R.string.favorites));
             new getMovieData().showFavorites();
+
 
 
         }

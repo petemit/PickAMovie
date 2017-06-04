@@ -13,7 +13,7 @@
         android:id="@+id/tv_movie_test_text"/>
     <ImageView
         android:layout_width="match_parent"
-        android:padding="15dp"
+        android:padding="@dimen/image_pad"
         android:layout_height="match_parent"
         android:id="@+id/iv_movie_poster"/>
 

@@ -20,9 +20,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="26sp"
+                android:textSize="@dimen/biggertext"
                 android:textStyle="bold"
-                android:padding="20dp"
+                android:padding="@dimen/text_padding"
                 tools:text="title"
                 android:gravity="center"
                 android:textColor="@color/whiteText"
@@ -30,8 +30,8 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="350dp"
-                android:padding="20dp"
+                android:layout_height="@dimen/image_detail_height"
+                android:padding="@dimen/text_padding"
                 android:id="@+id/iv_movie_details_poster"/>
 
             <LinearLayout
@@ -39,15 +39,15 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:paddingBottom="5dp"
-                android:paddingLeft="20dp">
+                android:paddingBottom="@dimen/view_distance_small"
+                android:paddingLeft="@dimen/text_padding">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Release Date: "
+                    android:text="@string/release_date"
                     android:textColor="@color/whiteText"
-                    android:textSize="26sp" />
+                    android:textSize="@dimen/biggertext" />
 
                 <TextView
                     android:id="@+id/tv_movie_details_release_date"
@@ -55,31 +55,31 @@
                     tools:text="12/23/2351"
                     android:layout_height="wrap_content"
                     android:textColor="@color/whiteText"
-                    android:textSize="26sp"
+                    android:textSize="@dimen/biggertext"
                     android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
+                android:paddingLeft="@dimen/text_padding"
                 android:gravity="center"
-                android:paddingBottom="5dp"
+                android:paddingBottom="@dimen/view_distance_small"
                 android:orientation="horizontal">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/whiteText"
-                    android:textSize="26sp"
+                    android:textSize="@dimen/biggertext"
 
-                    android:text="Average Vote: "/>
+                    android:text="@string/average_vote"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/whiteText"
                     tools:text="5/10"
-                    android:textSize="26sp"
+                    android:textSize="@dimen/biggertext"
 
                     android:textStyle="bold"
                     android:id="@+id/tv_movie_details_vote_average"/>
@@ -87,12 +87,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="26sp"
-                android:paddingLeft="100dp"
+                android:textSize="@dimen/biggertext"
+                android:paddingLeft="@dimen/bigger_screen_padding"
                 android:gravity="center"
-                tools:text="A really long synopsisA really long synopsisA really long synopsisA really long synopsisAreally long synopsisA really long synopsisA reallylong synopsisA really long synopsisA really long synopsisA really long synopsis"
-                android:paddingRight="100dp"
-                android:paddingBottom="5dp"
+                tools:text="A really long synopsisA really long synopsisA really long synopsisAreally long synopsisAreally long synopsisA really long synopsisA reallylong synopsisA really long synopsisA really long synopsisA really long synopsis"
+                android:paddingRight="@dimen/bigger_screen_padding"
+                android:paddingBottom="@dimen/view_distance_small"
                 android:textColor="@color/whiteText"
                 android:id="@+id/tv_movie_details_synopsis"/>
 
@@ -100,18 +100,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/colorPrimaryDark"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="20dp"></View>
+                android:layout_marginBottom="@dimen/text_padding"
+                android:layout_marginTop="@dimen/text_padding"></View>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="26sp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
+                android:textSize="@dimen/biggertext"
+                android:paddingLeft="@dimen/text_padding"
+                android:paddingRight="@dimen/text_padding"
                 android:layout_gravity="center"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp"
+                android:paddingTop="@dimen/text_padding"
+                android:paddingBottom="@dimen/text_padding"
                 android:textColor="@color/whiteText"
                 android:text="Trailers"/>
 
@@ -133,17 +133,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/colorPrimaryDark"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="20dp"></View>
+                android:layout_marginBottom="@dimen/text_padding"
+                android:layout_marginTop="@dimen/text_padding"></View>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="26sp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
+                android:textSize="@dimen/biggertext"
+                android:paddingLeft="@dimen/text_padding"
+                android:paddingRight="@dimen/text_padding"
                 android:layout_gravity="center"
-                android:paddingTop="20dp"
+                android:paddingTop="@dimen/text_padding"
                 android:textColor="@color/whiteText"
                 android:text="Reviews"/>
 
@@ -158,7 +158,7 @@
 
             <View
                 android:layout_width="wrap_content"
-                android:layout_height="150dp"></View>
+                android:layout_height="@dimen/empty_view_padding"></View>
 
 
         </LinearLayout>

@@ -9,10 +9,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tv_author"
-        android:paddingLeft="20dp"
+        android:paddingLeft="@dimen/text_padding"
         android:textColor="@color/whiteText"
-        android:paddingTop="20dp"
-        android:paddingRight="20dp"
+        android:paddingTop="@dimen/text_padding"
+        android:paddingRight="@dimen/text_padding"
         tool:text="Snazzy Review Guy"
         android:textStyle="italic"/>
 
@@ -20,30 +20,30 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="30dp"
+        android:paddingLeft="@dimen/slight_indentation"
         android:textColor="@color/whiteText"
-        android:paddingTop="10dp"
-        android:paddingRight="20dp"
+        android:paddingTop="@dimen/topPadding10"
+        android:paddingRight="@dimen/text_padding"
         tool:text="This is my Review of a Movie I have never seen before, but I'm sure you'll love it"
         android:id="@+id/tv_content"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="30dp"
+        android:paddingLeft="@dimen/slight_indentation"
 
         android:textColor="@android:color/holo_blue_bright"
         android:autoLink="web"
 
-        android:paddingRight="20dp"
-        android:text="More..."
+        android:paddingRight="@dimen/text_padding"
+        android:text="@string/more"
         android:id="@+id/tv_content_more"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorPrimaryDark"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp"></View>
+        android:layout_marginBottom="@dimen/text_padding"
+        android:layout_marginTop="@dimen/text_padding"></View>
 
 
 </LinearLayout>

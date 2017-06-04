@@ -14,5 +14,10 @@
     <string name="title_activity_main2">Main2Activity</string>
     <string name="nofavorites">No Favorites</string>
     <string name="favorites">Favorites</string>
+    <string name="moviedetails">Movie Details</string>
+    <string name="average_vote">Average Vote:</string>
+    <string name="release_date">Release Date:</string>
+    <string name="more">More...</string>
+    <string name="loading_content">Loading Content...</string>
 
 </resources>
