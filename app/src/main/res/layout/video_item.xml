@@ -28,7 +28,7 @@
         android:lines="2"
         android:paddingBottom="@dimen/view_distance_small"
         android:paddingRight="@dimen/view_distance_small"
-        tool:text="Thrilling movie"
+        tool:text="@string/dummy_movie_title"
         android:id="@+id/tv_trailer_title"/>
 
 

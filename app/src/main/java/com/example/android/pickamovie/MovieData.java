@@ -18,7 +18,11 @@ public class MovieData implements Serializable{
     private int vote_count;
     private float vote_average;
 
-    public MovieData(String overview, String poster_path, String release_date, String API_id, String original_title, String title, float popularity, int vote_count, float vote_average) {
+    public MovieData(String overview, String poster_path,
+                     String release_date, String API_id,
+                     String original_title, String title,
+                     float popularity, int vote_count,
+                     float vote_average) {
         this.overview = overview;
         this.poster_path = poster_path;
         this.release_date = release_date;

@@ -37,14 +37,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/text_padding"
-        android:paddingBottom="5dp"
+        android:paddingBottom="@dimen/view_distance_small"
         android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/whiteText"
             android:textSize="@dimen/detailText"
-            android:text="Release Date: "/>
+            android:text="@string/release_date"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -65,14 +65,14 @@
             android:layout_height="wrap_content"
             android:textColor="@color/whiteText"
             android:textSize="@dimen/detailText"
-            android:text="Average Vote: "/>
+            android:text="@string/average_vote"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/whiteText"
         android:textSize="@dimen/detailText"
-
+        tools:text="@string/dummy_rating"
         android:textStyle="bold"
         android:id="@+id/tv_movie_details_vote_average"/>
     </LinearLayout>
@@ -84,6 +84,7 @@
         android:paddingRight="@dimen/text_padding"
         android:paddingBottom="@dimen/view_distance_small"
         android:textColor="@color/whiteText"
+        tools:text="@string/dummy_synopsis"
         android:id="@+id/tv_movie_details_synopsis"/>
 
         <View
@@ -102,7 +103,7 @@
             android:paddingTop="@dimen/text_padding"
             android:paddingBottom="@dimen/text_padding"
             android:textColor="@color/whiteText"
-            android:text="Trailers"/>
+            android:text="@string/trailers"/>
 
 
         <HorizontalScrollView
@@ -132,7 +133,7 @@
             android:paddingRight="@dimen/text_padding"
             android:paddingTop="@dimen/text_padding"
             android:textColor="@color/whiteText"
-            android:text="Reviews"/>
+            android:text="@string/reviews"/>
 
 
         <LinearLayout

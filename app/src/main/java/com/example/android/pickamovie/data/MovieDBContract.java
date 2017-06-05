@@ -32,7 +32,8 @@ public class MovieDBContract {
         public static String COLUMN_VOTE_AVERAGE="vote_average";
 
 
-        public static final Uri CONTENT_URI=BASE_CONTENT_URI.buildUpon().appendPath(TABLE_NAME).build();
+        public static final Uri CONTENT_URI=BASE_CONTENT_URI.buildUpon().
+                appendPath(TABLE_NAME).build();
     }
 
     public static Uri buildSingleFavoriteQueryUri(long id) {
@@ -40,6 +41,7 @@ public class MovieDBContract {
     }
 
     public static Uri buildDeleteQueryByAPIID(long id) {
-        return ContentUris.withAppendedId(FavoriteMovies.CONTENT_URI.buildUpon().appendPath(API_PATH).build(),id);
+        return ContentUris.withAppendedId(FavoriteMovies.CONTENT_URI.
+                buildUpon().appendPath(API_PATH).build(),id);
     }
 }

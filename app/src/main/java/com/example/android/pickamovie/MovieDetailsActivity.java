@@ -39,7 +39,7 @@ import java.util.zip.Inflater;
 import static android.net.Uri.parse;
 
 public class MovieDetailsActivity extends AppCompatActivity {
-private MovieData md;
+    private MovieData md;
     private ImageView iv;
     private TextView title;
     private TextView synopsis;
@@ -47,8 +47,9 @@ private MovieData md;
     private TextView releaseDate;
     private ViewGroup reviewroot;
     private ViewGroup videoroot;
-    private final boolean MOVIEFAVORITED=true;
-    private final boolean MOVIEUNFAVORITED=false;
+    private final boolean MOVIEFAVORITED = true;
+    private final boolean MOVIEUNFAVORITED = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,29 +57,26 @@ private MovieData md;
         setContentView(R.layout.activity_movie_details);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        if (getIntent().hasExtra("movieData")){
-            md=(MovieData)getIntent().getSerializableExtra("movieData");
+        if (getIntent().hasExtra(getString(R.string.movieData_key))) {
+            md = (MovieData) getIntent().getSerializableExtra(getString(R.string.movieData_key));
         }
-        iv=(ImageView)findViewById(R.id.iv_movie_details_poster);
-        title=(TextView)findViewById(R.id.tv_movie_details_title);
-        synopsis=(TextView)findViewById(R.id.tv_movie_details_synopsis);
-        voteAverage=(TextView)findViewById(R.id.tv_movie_details_vote_average);
-        releaseDate=(TextView)findViewById(R.id.tv_movie_details_release_date);
-        URL posterPath=NetworkUtils.imageUrlBuilder(md.getPoster_path());
+        iv = (ImageView) findViewById(R.id.iv_movie_details_poster);
+        title = (TextView) findViewById(R.id.tv_movie_details_title);
+        synopsis = (TextView) findViewById(R.id.tv_movie_details_synopsis);
+        voteAverage = (TextView) findViewById(R.id.tv_movie_details_vote_average);
+        releaseDate = (TextView) findViewById(R.id.tv_movie_details_release_date);
+        URL posterPath = NetworkUtils.imageUrlBuilder(md.getPoster_path());
         Picasso.with(getBaseContext()).load(posterPath.toString()).into(iv);
         title.setText(md.getTitle());
         synopsis.setText(md.getOverview());
         voteAverage.setText(String.valueOf(md.getVote_average()));
         releaseDate.setText(md.getRelease_date());
 
-        reviewroot=(ViewGroup)findViewById(R.id.review_root);
-        videoroot=(ViewGroup)findViewById(R.id.video_root);
+        reviewroot = (ViewGroup) findViewById(R.id.review_root);
+        videoroot = (ViewGroup) findViewById(R.id.video_root);
 
         new getMovieReviews().execute(md.getId());
         new getMovieVideos().execute(md.getId());
-
-
-
 
 
 //Set up the floating action button to show the correct toggle whether it's been favorited or not
@@ -104,8 +102,6 @@ private MovieData md;
 
             md.setDbID(curs.getLong(curs.getColumnIndex(MovieDBContract.FavoriteMovies._ID)));
         }
-
-
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -141,7 +137,7 @@ private MovieData md;
 
         @Override
         protected void onPostExecute(JSONObject jo) {
-            LayoutInflater inflater =  getLayoutInflater();
+            LayoutInflater inflater = getLayoutInflater();
             super.onPostExecute(jo);
             ArrayList<String> reviewList = new ArrayList<String>();
             JSONArray ja = null;
@@ -150,16 +146,15 @@ private MovieData md;
                 ja = jo.getJSONArray("results");
 
                 for (int i = 0; i < ja.length(); i++) {
-                    View view =inflater.inflate(R.layout.review_item, reviewroot, false);
+                    View view = inflater.inflate(R.layout.review_item, reviewroot, false);
                     TextView tv_author = (TextView) view.findViewById(R.id.tv_author);
                     TextView tv_content = (TextView) view.findViewById(R.id.tv_content);
                     TextView tv_url = (TextView) view.findViewById(R.id.tv_content_more);
-                    String author = ja.getJSONObject(i).get("author").toString();
-                    String content = ja.getJSONObject(i).get("content").toString();
-                    if (content.length() >101) {
+                    String author = ja.getJSONObject(i).get(getString(R.string.author_key)).toString();
+                    String content = ja.getJSONObject(i).get(getString(R.string.content_key)).toString();
+                    if (content.length() > 101) {
                         content = content.substring(0, 100) + ". . .";
-                    }
-                    else{
+                    } else {
                         tv_url.setVisibility(View.GONE);
                     }
                     final String link = ja.getJSONObject(i).get("url").toString();
@@ -230,7 +225,7 @@ private MovieData md;
 
         @Override
         protected void onPostExecute(JSONObject jo) {
-            LayoutInflater inflater =  getLayoutInflater();
+            LayoutInflater inflater = getLayoutInflater();
             super.onPostExecute(jo);
 
             JSONArray ja = null;
@@ -239,31 +234,34 @@ private MovieData md;
                 ja = jo.getJSONArray("results");
 
                 for (int i = 0; i < ja.length(); i++) {
-                    View view =inflater.inflate(R.layout.video_item, videoroot, false);
-                    ImageView movieThumbnail= (ImageView) view.findViewById(R.id.tv_movie_thumbnail);
+                    View view = inflater.inflate(R.layout.video_item, videoroot, false);
+                    ImageView movieThumbnail = (ImageView) view.findViewById(R.id.tv_movie_thumbnail);
                     TextView tv_Title = (TextView) view.findViewById(R.id.tv_trailer_title);
 
-                    String trailername = ja.getJSONObject(i).get("name").toString();
-                    final String key = ja.getJSONObject(i).get("key").toString();
+                    String trailername = ja.getJSONObject(i).get(getString(R.string.trailer_name_key)).toString();
+                    final String key = ja.getJSONObject(i).get(getString(R.string.movie_youtube_key)).toString();
 
-                    Uri thumbnailUri= NetworkUtils.youtubeThumbnailGrab(key);
+                    Uri thumbnailUri = NetworkUtils.youtubeThumbnailGrab(key);
                     Picasso.with(view.getContext()).load(thumbnailUri).into(movieThumbnail);
                     tv_Title.setText(trailername);
 
                     movieThumbnail.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:"+key));
+                            Intent myIntent = new Intent(Intent.ACTION_VIEW,
+                                    Uri.parse("vnd.youtube:" + key));
                             if (myIntent.resolveActivity(getPackageManager()) != null) {
                                 startActivity(myIntent);
-                            }
-                            else{
-                                Intent vidWebIntent = new Intent(Intent.ACTION_VIEW, NetworkUtils.youtubeLinkBuilder(key));
+                            } else {
+                                Intent vidWebIntent = new
+                                        Intent(Intent.ACTION_VIEW,
+                                        NetworkUtils.youtubeLinkBuilder(key));
                                 if (vidWebIntent.resolveActivity(getPackageManager()) != null) {
                                     startActivity(vidWebIntent);
                                 }
 
-                            };
+                            }
+                            ;
 
                         }
                     });
@@ -295,36 +293,35 @@ private MovieData md;
     }
 
 
-
-    private void switchFabIcon(FloatingActionButton fab, Context context){
+    private void switchFabIcon(FloatingActionButton fab, Context context) {
         //will return true if it has been favorited.  This will allow us to toggle.
-        if (!(fab.getTag ()==null)&& (boolean)fab.getTag()){
+        if (!(fab.getTag() == null) && (boolean) fab.getTag()) {
             fab.setTag(MOVIEUNFAVORITED);
             fab.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_empty_star));
             //need content Provider logic
-            if (md.getDbID()>-1){
-                Uri deleteUri=MovieDBContract.buildSingleFavoriteQueryUri(md.getDbID());
-                getContentResolver().delete(deleteUri,null,null);
+            if (md.getDbID() > -1) {
+                Uri deleteUri = MovieDBContract.buildSingleFavoriteQueryUri(md.getDbID());
+                getContentResolver().delete(deleteUri, null, null);
             }
 
-        }
-        else {
+        } else {
             fab.setTag(MOVIEFAVORITED);
             fab.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_full_star));
             //Need Content Provider Logic
 
             ContentValues cv = new ContentValues();
-            cv.put(MovieDBContract.FavoriteMovies.COLUMN_API_ID,md.getId());
-            cv.put(MovieDBContract.FavoriteMovies.COLUMN_OVERVIEW,md.getOverview());
-            cv.put(MovieDBContract.FavoriteMovies.COLUMN_POSTER_PATH,md.getPoster_path());
-            cv.put(MovieDBContract.FavoriteMovies.COLUMN_RELEASE_DATE,md.getRelease_date());
-            cv.put(MovieDBContract.FavoriteMovies.COLUMN_ORIGINAL_TITLE,md.getOriginal_title());
-            cv.put(MovieDBContract.FavoriteMovies.COLUMN_TITLE,md.getTitle());
-            cv.put(MovieDBContract.FavoriteMovies.COLUMN_POPULARITY,md.getPopularity());
-            cv.put(MovieDBContract.FavoriteMovies.COLUMN_VOTE_COUNT,md.getVote_count());
-            cv.put(MovieDBContract.FavoriteMovies.COLUMN_VOTE_AVERAGE,md.getVote_average());
+            cv.put(MovieDBContract.FavoriteMovies.COLUMN_API_ID, md.getId());
+            cv.put(MovieDBContract.FavoriteMovies.COLUMN_OVERVIEW, md.getOverview());
+            cv.put(MovieDBContract.FavoriteMovies.COLUMN_POSTER_PATH, md.getPoster_path());
+            cv.put(MovieDBContract.FavoriteMovies.COLUMN_RELEASE_DATE, md.getRelease_date());
+            cv.put(MovieDBContract.FavoriteMovies.COLUMN_ORIGINAL_TITLE, md.getOriginal_title());
+            cv.put(MovieDBContract.FavoriteMovies.COLUMN_TITLE, md.getTitle());
+            cv.put(MovieDBContract.FavoriteMovies.COLUMN_POPULARITY, md.getPopularity());
+            cv.put(MovieDBContract.FavoriteMovies.COLUMN_VOTE_COUNT, md.getVote_count());
+            cv.put(MovieDBContract.FavoriteMovies.COLUMN_VOTE_AVERAGE, md.getVote_average());
 
-         md.setDbID(ContentUris.parseId(getContentResolver().insert(MovieDBContract.FavoriteMovies.CONTENT_URI,cv)));
+            md.setDbID(ContentUris.parseId(getContentResolver()
+                    .insert(MovieDBContract.FavoriteMovies.CONTENT_URI, cv)));
         }
     }
 

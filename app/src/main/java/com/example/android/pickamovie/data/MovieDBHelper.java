@@ -26,7 +26,8 @@ public class MovieDBHelper extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db) {
 
         final String createFavMovieSQL = "CREATE TABLE " +
-                MovieDBContract.FavoriteMovies.TABLE_NAME+ "(" + MovieDBContract.FavoriteMovies._ID +
+                MovieDBContract.FavoriteMovies.TABLE_NAME+
+                "(" + MovieDBContract.FavoriteMovies._ID +
                 " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 MovieDBContract.FavoriteMovies.COLUMN_API_ID + " TEXT NOT NULL, " +
                 MovieDBContract.FavoriteMovies.COLUMN_ORIGINAL_TITLE + " TEXT, " +

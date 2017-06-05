@@ -83,7 +83,7 @@ public class MovieRVAdapter extends RecyclerView.Adapter<MovieRVAdapter.MovieRVA
         @Override
         public void onClick(View v) {
             Intent intent = new Intent();
-            intent.putExtra("movieData", md);
+            intent.putExtra(context.getString(R.string.movieData_key), md);
             intent.setClass(v.getContext(), MovieDetailsActivity.class);
             if (intent.resolveActivity(v.getContext().getPackageManager())!=null) {
                 v.getContext().startActivity(intent);

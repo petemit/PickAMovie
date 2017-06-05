@@ -23,7 +23,7 @@
         android:textSize="@dimen/mainTextSize"
         android:textStyle="bold"
         android:padding="@dimen/text_padding"
-        tools:text="title"
+        tools:text="@string/dummy_title"
         android:gravity="center"
         android:textColor="@color/whiteText"
         android:id="@+id/tv_movie_details_title"/>
@@ -45,14 +45,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Release Date: "
+                android:text="@string/release_date"
                 android:textColor="@color/whiteText"
                 android:textSize="@dimen/detailText" />
 
             <TextView
                 android:id="@+id/tv_movie_details_release_date"
                 android:layout_width="wrap_content"
-                tools:text="12/23/2351"
+                tools:text="@string/dummy_release_date"
                 android:layout_height="wrap_content"
                 android:textColor="@color/whiteText"
                 android:textSize="@dimen/detailText"
@@ -78,7 +78,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/whiteText"
-        tools:text="5/10"
+        tools:text="@string/dummy_rating"
         android:textSize="@dimen/detailText"
 
         android:textStyle="bold"
@@ -90,7 +90,7 @@
         android:textSize="@dimen/detailText"
         android:paddingLeft="@dimen/bigger_screen_padding"
         android:gravity="center"
-        tools:text="A really long synopsisA really long synopsisA really long synopsisA really long synopsisAreally long synopsisA really long synopsisA reallylong synopsisA really long synopsisA really long synopsisA really long synopsis"
+        tools:text="@string/dummy_synopsis"
         android:paddingRight="@dimen/bigger_screen_padding"
         android:paddingBottom="@dimen/view_distance_small"
         android:textColor="@color/whiteText"
@@ -113,7 +113,7 @@
             android:paddingTop="@dimen/text_padding"
             android:paddingBottom="@dimen/text_padding"
             android:textColor="@color/whiteText"
-            android:text="Trailers"/>
+            android:text="@string/trailers"/>
 
 
         <HorizontalScrollView
@@ -145,7 +145,7 @@
             android:layout_gravity="center"
             android:paddingTop="@dimen/text_padding"
             android:textColor="@color/whiteText"
-            android:text="Reviews"/>
+            android:text="@string/reviews"/>
 
 
         <LinearLayout

@@ -19,5 +19,19 @@
     <string name="release_date">Release Date:</string>
     <string name="more">More...</string>
     <string name="loading_content">Loading Content...</string>
+    <string name="reviews">Reviews</string>
+    <string name="trailers">Trailers</string>
+    <string name="dummy_synopsis">A really long synopsisA really long synopsisA really long synopsisAreally long synopsisAreally long synopsisA really long synopsisA reallylong synopsisA really long synopsisA really long synopsisA really long synopsis</string>
+    <string name="dummy_rating">5/10</string>
+    <string name="dummy_title">title</string>
+    <string name="dummy_release_date">12/23/2351</string>
+    <string name="dummy_author">Snazzy Review Guy</string>
+    <string name="dummy_review">This is my Review of a Movie I have never seen before, but I\'m sure you\'ll love it</string>
+    <string name="dummy_movie_title">Thrilling movie</string>
+    <string name="movieData_key">movieData</string>
+    <string name="author_key">author</string>
+    <string name="content_key">content</string>
+    <string name="trailer_name_key">name</string>
+    <string name="movie_youtube_key">key</string>
 
 </resources>

@@ -34,9 +34,12 @@ public class MovieDBContentProvider extends ContentProvider {
 
     public static UriMatcher makeUriMatcher() {
         UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
-        matcher.addURI(MovieDBContract.AUTHORITY, MovieDBContract.FavoriteMovies.TABLE_NAME, FAVORITES);
-        matcher.addURI(MovieDBContract.AUTHORITY, MovieDBContract.FavoriteMovies.TABLE_NAME + "/#", FAVORITE_BY_ID);
-        matcher.addURI(MovieDBContract.AUTHORITY, MovieDBContract.FavoriteMovies.TABLE_NAME + "/" +
+        matcher.addURI(MovieDBContract.AUTHORITY,
+                MovieDBContract.FavoriteMovies.TABLE_NAME, FAVORITES);
+        matcher.addURI(MovieDBContract.AUTHORITY,
+                MovieDBContract.FavoriteMovies.TABLE_NAME + "/#", FAVORITE_BY_ID);
+        matcher.addURI(MovieDBContract.AUTHORITY,
+                MovieDBContract.FavoriteMovies.TABLE_NAME + "/" +
                 MovieDBContract.API_PATH + "/#", FAVORITE_BY_APIID);
         return matcher;
     }
@@ -49,7 +52,11 @@ public class MovieDBContentProvider extends ContentProvider {
 
     @Nullable
     @Override
-    public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
+    public Cursor query(@NonNull Uri uri,
+                        @Nullable String[] projection,
+                        @Nullable String selection,
+                        @Nullable String[] selectionArgs,
+                        @Nullable String sortOrder) {
         Cursor cursor=null;
         SQLiteDatabase db= dbHelper.getReadableDatabase();
 
@@ -60,18 +67,36 @@ public class MovieDBContentProvider extends ContentProvider {
 
         switch (uriMatcher.match(uri)){
             case FAVORITES:
-                cursor= db.query(MovieDBContract.FavoriteMovies.TABLE_NAME,null,null,null,null,null,null);
+                cursor= db.query(MovieDBContract.FavoriteMovies.TABLE_NAME,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null);
                 break;
             case FAVORITE_BY_ID:
                 String mSelection= MovieDBContract.FavoriteMovies._ID + "=? ";
                 String[] mSelectionArgs= {String.valueOf(ContentUris.parseId(uri))};
-                cursor= db.query(MovieDBContract.FavoriteMovies.TABLE_NAME,null,mSelection,mSelectionArgs,null,null,null);
+                cursor= db.query(MovieDBContract.FavoriteMovies.TABLE_NAME,
+                        null,
+                        mSelection,
+                        mSelectionArgs,
+                        null,
+                        null,
+                        null);
                 break;
 
             case FAVORITE_BY_APIID:
                 String mAPISelection= MovieDBContract.FavoriteMovies.COLUMN_API_ID + "=? ";
                 String[] mAPISelectionArgs= {String.valueOf(ContentUris.parseId(uri))};
-                cursor= db.query(MovieDBContract.FavoriteMovies.TABLE_NAME,null,mAPISelection,mAPISelectionArgs,null,null,null);
+                cursor= db.query(MovieDBContract.FavoriteMovies.TABLE_NAME,
+                        null,
+                        mAPISelection,
+                        mAPISelectionArgs,
+                        null,
+                        null,
+                        null);
                 break;
             default:
                 throw new IllegalArgumentException("Query not supported");
@@ -166,7 +191,10 @@ public class MovieDBContentProvider extends ContentProvider {
     }
 
     @Override
-    public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
+    public int update(@NonNull Uri uri,
+                      @Nullable ContentValues values,
+                      @Nullable String selection,
+                      @Nullable String[] selectionArgs) {
         return 0;
     }
 }

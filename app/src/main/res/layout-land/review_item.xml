@@ -14,7 +14,7 @@
         android:layout_gravity="center"
         android:paddingTop="@dimen/text_padding"
         android:paddingRight="@dimen/text_padding"
-        tool:text="Snazzy Review Guy"
+        tool:text="@string/dummy_author"
         android:textStyle="italic"/>
 
 
@@ -26,7 +26,7 @@
         android:layout_gravity="center"
         android:paddingTop="@dimen/topPadding10"
         android:paddingRight="@dimen/text_padding"
-        tool:text="This is my Review of a Movie I have never seen before, but I'm sure you'll love it"
+        tool:text="@string/dummy_review"
         android:id="@+id/tv_content"/>
 
     <TextView
